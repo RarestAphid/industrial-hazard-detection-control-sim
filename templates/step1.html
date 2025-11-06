@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BARSS Process Simulation - Interactive Control</title>
+    <meta name="description" content="Interactive industrial simulation for BaSO₄ to BaS conversion process">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body class="single-step-body">
+    <!-- ENHANCED HEADER -->
+    <header class="step-header">
+        <div class="header-content">
+            <h1>Industrial Safety and Automation</h1>
+            <p>Configure parameters • Monitor equipment • Execute BaSO₄ → BaS transformation</p>
+            <div class="header-indicators">
+                <div class="status-indicator">
+                    <span class="indicator-dot"></span>
+                    <span class="indicator-text">System Online</span>
+                </div>
+                <div class="process-indicator">
+                    <span class="process-dot"></span>
+                    <span class="process-text">Ready for Operation</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN SIMULATION CONTAINER -->
+    <main id="canvas-container">
+        <div class="simulation-wrapper">
+            <div class="control-overlay">
+                <div class="overlay-info">
+                    <h3>Process Control Interface</h3>
+                    <p>Click equipment markers to configure parameters.</p>
+                    <p>Please click <a href="{{ url_for('instructions') }}" style="color: skyblue;">here</a> for accepted values.</p>
+                </div>
+            </div>
+            <canvas id="step1Canvas" width="1400" height="600"></canvas>
+            <div class="simulation-footer">
+                <div class="simulation-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Equipment Status:</span>
+                        <span class="stat-value" id="equipment-status">Standby</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Process Phase:</span>
+                        <span class="stat-value" id="process-phase">Initialization</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">IoT Connectivity:</span>
+                        <span class="stat-value connected">Active</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ENHANCED FOOTER -->
+    <footer class="nav-footer">
+        <div class="footer-content">
+            <a href="{{ url_for('index') }}" class="nav-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m12 19-7-7 7-7"/>
+                    <path d="m19 12H5"/>
+                </svg>
+                Return to Home
+            </a>
+            <div class="footer-info">
+                <span>Industrial Process Simulation Platform</span>
+                <span class="separator">•</span>
+                <span>BaSO₄ → BaS Conversion</span>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="{{ url_for('static', filename='scripts/step1.js') }}"></script>
+
+    <!-- Additional JavaScript for enhanced UI -->
+    <script>
+        // Dynamic status updates
+        function updateSystemStatus() {
+            const canvas = document.getElementById('step1Canvas');
+            if (canvas) {
+                const equipmentStatus = document.getElementById('equipment-status');
+                const processPhase = document.getElementById('process-phase');
+
+                setTimeout(() => {
+                    if (equipmentStatus) equipmentStatus.textContent = 'Operational';
+                    if (processPhase) processPhase.textContent = 'Material Input';
+                }, 2000);
+            }
+        }
+
+        // Initialize status monitoring
+        document.addEventListener('DOMContentLoaded', updateSystemStatus);
+    </script>
+</body>
+</html>
